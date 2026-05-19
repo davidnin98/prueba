@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>KAPTA System — Metodología de captación</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap');
+
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-Thin.ttf'); font-weight: 100; }
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-ExtraLight.ttf'); font-weight: 200; }
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-Light.ttf'); font-weight: 300; }
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-Regular.ttf'); font-weight: 400; }
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-Medium.ttf'); font-weight: 500; }
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-SemiBold.ttf'); font-weight: 600; }
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-Bold.ttf'); font-weight: 700; }
+@font-face { font-family: 'Sequel Sans Display'; src: url('fonts/Sequel Sans Light Disp.otf'); font-weight: 300; }
+@font-face { font-family: 'Sequel Sans Display'; src: url('fonts/Sequel Sans Medium Disp.otf'); font-weight: 500; }
+@font-face { font-family: 'Sequel Sans Display'; src: url('fonts/sequel-sans-bold-disp.ttf'); font-weight: 700; }
+@font-face { font-family: 'Sequel Sans Display'; src: url('fonts/Sequel Sans Heavy Disp.otf'); font-weight: 800; }
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream:        #F5F0E8;
+  --cream2:       #EDE8DE;
+  --dark:         #1C1814;
+  --dark2:        #231F1A;
+  --gold:         #B8913A;
+  --copper:       #8B7355;
+  --gold-grad:    linear-gradient(135deg, #C9A448 0%, #B8913A 50%, #9A7A30 100%);
+
+  --type-display:  96px;
+  --type-title:    72px;
+  --type-heading:  52px;
+  --type-sub:      38px;
+  --type-body:     30px;
+  --type-small:    26px;
+  --type-label:    24px;
+  --type-micro:    24px;
+
+  --pad-x:  120px;
+  --pad-y:  100px;
+  --gap-xl: 56px;
+  --gap-lg: 40px;
+  --gap-md: 28px;
+  --gap-sm: 18px;
+}
+
+section {
+  width: 100%; height: 100%;
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+.dark-bg  { background: var(--dark); }
+.cream-bg { background: var(--cream); }
+
+/* ── Shared atoms ── */
+.eyebrow {
+  font-family: 'Poppins', sans-serif;
+  font-size: var(--type-label);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--copper);
+}
+.eyebrow-gold { color: var(--gold); }
+
+.gold-bar-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold) 0%, rgba(184,145,58,0.12) 100%);
+}
+.gold-rule { width: 48px; height: 2px; background: var(--gold); flex-shrink: 0; }
+.gold-rule-sm { width: 32px; height: 2px; background: rgba(184,145,58,0.5); flex-shrink: 0; }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  font-size: var(--type-label);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 7px 18px;
+  border-radius: 2px;
+}
+.badge-gold  { background: var(--gold); color: var(--dark); }
+.badge-dark  { background: var(--dark); color: var(--gold); border: 1px solid rgba(184,145,58,0.3); }
+.badge-cream { background: transparent; color: var(--gold); border: 1px solid rgba(184,145,58,0.4); }
+
+.ghost-num {
+  position: absolute;
+  font-family: 'Sequel Sans Display', sans-serif;
+  font-weight: 800;
+  color: rgba(184,145,58,0.055);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.04em;
+}
+
+.img-ph {
+  background: rgba(184,145,58,0.06);
+  border: 1.5px dashed rgba(184,145,58,0.32);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px;
+}
+.img-ph-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: var(--type-small);
+  font-weight: 400;
+  color: rgba(184,145,58,0.7);
+  text-align: center;
+}
+.img-ph-url {
+  font-family: 'Poppins', sans-serif;
+  font-size: var(--type-micro);
+  font-weight: 300;
+  color: rgba(184,145,58,0.4);
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+.cream-bg .img-ph {
+  background: rgba(28,24,20,0.04);
+  border-color: rgba(28,24,20,0.18);
+}
+.cream-bg .img-ph-label { color: var(--copper); }
+.cream-bg .img-ph-url   { color: rgba(139,115,85,0.55); }
+
+/* ── Display title styles ── */
+.title-display {
+  font-family: 'Sequel Sans Display', sans-serif;
+  font-weight: 800;
+  color: var(--cream);
+  letter-spacing: -0.03em;
+  line-height: 1.0;
+}
+.title-display.on-cream { color: var(--dark); }
+
+.title-heading {
+  font-family: 'Sequel Sans Display', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.italic-sub {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.45;
+}
+
+.body-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+}
+</style>
+</head>
+<body>
+<script src="deck-stage.js"></script>
+<deck-stage width="1920" height="1080">
+
+
+<!-- ════════════════════════════════════════
+     SLIDE 01 — PORTADA
+     Dark · Editorial izquierda · ghost K
+════════════════════════════════════════ -->
+<section class="dark-bg" data-screen-label="01 Portada">
+  <div class="gold-bar-top"></div>
+  <!-- Ghost K -->
+  <div class="ghost-num" style="font-size: 740px; right: -50px; bottom: -90px;">K</div>
+
+  <!-- Layout -->
+  <div style="
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    justify-content: space-between;
+    padding: var(--pad-y) var(--pad-x);
+  ">
+    <!-- Top row -->
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <div class="badge badge-gold">Metodología</div>
+      <div style="font-family:'Poppins',sans-serif;font-size:var(--type-label);font-weight:300;color:rgba(245,240,232,0.3);letter-spacing:0.12em;text-transform:uppercase;">Presentación de servicio</div>
+    </div>
+
+    <!-- Brand block -->
+    <div style="display: flex; flex-direction: column; gap: var(--gap-md);">
+      <div class="title-display" style="font-size: var(--type-display);">KAPTA <span style="color: var(--gold);">System</span></div>
+      <div style="width: 56px; height: 2px; background: rgba(184,145,58,0.45);"></div>
+      <div class="italic-sub" style="font-size: var(--type-sub); color: rgba(245,240,232,0.55); max-width: 720px;">
+        Sistema completo de captación de clientes<br>para clínicas y centros de estética
+      </div>
+    </div>
+
+    <!-- Bottom row -->
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <div style="font-family:'Poppins',sans-serif;font-size:var(--type-label);font-weight:200;color:rgba(245,240,232,0.18);letter-spacing:0.18em;text-transform:uppercase;">2026</div>
+      <div style="width: 6px; height: 6px; border-radius: 50%; background: var(--gold); opacity: 0.5;"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SLIDE 02 — PAUSA / MOMENTO PARA TI
+     Dark · Full centrado · solo tipografía
+════════════════════════════════════════ -->
+<section class="dark-bg" data-screen-label="02 Momento para ti">
+  <div style="
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: var(--pad-y) 160px;
+    gap: 48px; text-align: center;
+  ">
+    <div style="width: 2px; height: 72px; background: rgba(184,145,58,0.4);"></div>
+    <div class="italic-sub" style="font-size: var(--type-heading); color: var(--cream); max-width: 1100px; line-height: 1.4;">
+      "Antes de explicarte cómo trabajo, me he tomado el tiempo de investigar tu situación."
+    </div>
+    <div style="font-family:'Poppins',sans-serif;font-size:var(--type-body);font-weight:200;color:rgba(245,240,232,0.38);letter-spacing:0.06em;">
+      Tu mercado &nbsp;·&nbsp; Lo que está haciendo tu competencia &nbsp;·&nbsp; Lo que eso significa para ti
+    </div>
+    <div style="width: 2px; height: 72px; background: rgba(184,145,58,0.4);"></div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SLIDE 03 — LOS 4 PILARES
+     Cream · Grid 2×2 con cards oscuras/claras
+════════════════════════════════════════ -->
+<section class="cream-bg" data-screen-label="03 Los 4 pilares">
+  <div style="
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    padding: var(--pad-y) var(--pad-x);
+    gap: var(--gap-xl);
+  ">
+    <!-- Header -->
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <div class="eyebrow">El método</div>
+      <div class="title-heading on-cream" style="font-size: var(--type-heading); color: var(--dark);">
+        Cómo llegamos a los números que acabamos de calcular
+      </div>
+    </div>
+
+    <!-- 4 cards -->
+    <div style="display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; flex: 1;">
+
+      <div style="display:flex;flex-direction:column;gap:24px;padding:44px 36px;background:var(--dark);border-radius:4px;">
+        <div style="font-family:'Sequel Sans Display',sans-serif;font-size:76px;font-weight:800;color:var(--gold);line-height:1;letter-spacing:-0.03em;">01</div>
+        <div class="gold-rule-sm"></div>
+        <div class="title-heading" style="font-size:var(--type-sub);color:var(--cream);line-height:1.2;">Radiografía<br>y estrategia</div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:24px;padding:44px 36px;background:var(--cream2);border:1px solid rgba(28,24,20,0.08);border-radius:4px;">
+        <div style="font-family:'Sequel Sans Display',sans-serif;font-size:76px;font-weight:800;color:var(--gold);line-height:1;letter-spacing:-0.03em;">02</div>
+        <div class="gold-rule-sm"></div>
+        <div class="title-heading" style="font-size:var(--type-sub);color:var(--dark);line-height:1.2;">Creatividad<br>anticuriosas</div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:24px;padding:44px 36px;background:var(--cream2);border:1px solid rgba(28,24,20,0.08);border-radius:4px;">
+        <div style="font-family:'Sequel Sans Display',sans-serif;font-size:76px;font-weight:800;color:var(--gold);line-height:1;letter-spacing:-0.03em;">03</div>
+        <div class="gold-rule-sm"></div>
+        <div class="title-heading" style="font-size:var(--type-sub);color:var(--dark);line-height:1.2;">Captación<br>proactiva</div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:24px;padding:44px 36px;background:var(--cream2);border:1px solid rgba(28,24,20,0.08);border-radius:4px;">
+        <div style="font-family:'Sequel Sans Display',sans-serif;font-size:76px;font-weight:800;color:var(--gold);line-height:1;letter-spacing:-0.03em;">04</div>
+        <div class="gold-rule-sm"></div>
+        <div class="title-heading" style="font-size:var(--type-sub);color:var(--dark);line-height:1.2;">Medición y<br>optimización</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SLIDE 04 — PILAR 01
+     Dark · Editorial izquierda · numeral bg
+════════════════════════════════════════ -->
+<section class="dark-bg" data-screen-label="04 Pilar 01">
+  <div class="gold-bar-top"></div>
+  <div class="ghost-num" style="font-size: 680px; right: -30px; bottom: -70px;">01</div>
+
+  <div style="
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: var(--pad-y) var(--pad-x);
+    gap: var(--gap-lg); max-width: 920px;
+  ">
+    <div class="badge badge-gold">Pilar 01</div>
+    <div class="title-display" style="font-size: var(--type-title);">Radiografía<br>y estrategia</div>
+    <div class="gold-rule"></div>
+    <div class="italic-sub" style="font-size: var(--type-sub); color: rgba(245,240,232,0.65);">
+      Qué vamos a vender, a quién y cómo —<br>antes de gastar un euro
+    </div>
+    <div class="body-text" style="font-size: var(--type-body); color: rgba(245,240,232,0.4); max-width: 700px;">
+      Si la oferta no aguanta, te lo digo antes de invertir un euro.<br>
+      Ningún anuncio sale sin base validada.
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SLIDE 05 — PILAR 02 CREATIVIDAD
+     Cream · Split asimétrico izq/der
+════════════════════════════════════════ -->
+<section class="cream-bg" data-screen-label="05 Pilar 02">
+
+  <!-- Columna izquierda oscura -->
+  <div style="
+    position: absolute; left: 0; top: 0; bottom: 0; width: 46%;
+    background: var(--dark);
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: var(--pad-y) 80px;
+    gap: var(--gap-lg);
+  ">
+    <div class="badge badge-gold" style="align-self: flex-start;">Pilar 02</div>
+    <div class="title-display" style="font-size: var(--type-title);">Creatividad<br>anticuriosas</div>
+    <div class="gold-rule"></div>
+    <div class="italic-sub" style="font-size: var(--type-body); color: rgba(245,240,232,0.45); line-height: 1.6;">
+      "Si habla a cualquiera,<br>llega cualquiera."
+    </div>
+  </div>
+
+  <!-- Columna derecha crema -->
+  <div style="
+    position: absolute; left: 46%; right: 0; top: 0; bottom: 0;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: var(--pad-y) 80px;
+    gap: 0;
+  ">
+    <!-- Valor intrínseco -->
+    <div style="padding-bottom: 52px; border-bottom: 1px solid rgba(28,24,20,0.1);">
+      <div style="font-family:'Poppins',sans-serif;font-size:var(--type-label);font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--copper);margin-bottom:16px;">Valor intrínseco</div>
+      <div class="title-heading" style="font-size: var(--type-heading); color: var(--dark);">Lo buena que eres</div>
+    </div>
+
+    <!-- Valor percibido -->
+    <div style="padding-top: 52px;">
+      <div style="font-family:'Poppins',sans-serif;font-size:var(--type-label);font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;">Valor percibido</div>
+      <div class="title-heading" style="font-size: var(--type-heading); color: var(--dark);">Lo que tu clienta entiende</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SLIDE 06 — EJEMPLO CREATIVO A
+     Dark · Full image layout
+════════════════════════════════════════ -->
+<section class="dark-bg" data-screen-label="06 Ejemplo A">
+  <div class="gold-bar-top"></div>
+
+  <div style="
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    padding: 60px var(--pad-x);
+    gap: 28px;
+  ">
+    <!-- Label row -->
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <span style="font-family:'Poppins',sans-serif;font-size:var(--type-label);font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);">Ejemplo real</span>
+      <span style="width:1px;height:22px;background:rgba(184,145,58,0.3);"></span>
+      <span style="font-family:'Poppins',sans-serif;font-size:var(--type-label);font-weight:300;color:rgba(245,240,232,0.35);letter-spacing:0.1em;">Centro de uñas · Ángulo: descuento en primera visita</span>
+    </div>
+
+    <!-- Main creative placeholder -->
+    <div class="img-ph" style="flex: 1;">
+      <div class="img-ph-label">Creativo principal</div>
+      <div class="img-ph-url">[INSERTAR URL: creativo-centro-unas]</div>
+    </div>
+
+    <!-- Metrics placeholder -->
+    <div class="img-ph" style="height: 176px;">
+      <div class="img-ph-label">Métricas de campaña</div>
+      <div class="img-ph-url">[INSERTAR URL: metricas-centro-unas]</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SLIDE 07 — EJEMPLO CREATIVO B
+     Dark · Full image layout
+════════════════════════════════════════ -->
+<section class="dark-bg" data-screen-label="07 Ejemplo B">
+  <div class="gold-bar-top"></div>
+
+  <div style="
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    padding: 60px var(--pad-x);
+    gap: 28px;
+  ">
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <span style="font-family:'Poppins',sans-serif;font-size:var(--type-label);font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);">Ejemplo real</span>
+      <span style="width:1px;height:22px;background:rgba(184,145,58,0.3);"></span>
+      <span style="font-family:'Poppins',sans-serif;font-size:var(--type-label);font-weight:300;color:rgba(245,240,232,0.35);letter-spacing:0.1em;">Lámparas artesanales · Enna Lux · Sin incentivo de precio</span>
+    </div>
+
+    <div class="img-ph" style="flex: 1;">
+      <div class="img-ph-label">Creativo principal</div>
+      <div class="img-ph-url">[INSERTAR URL: creativo-enna-lux]</div>
+    </div>
+
+    <div class="img-ph" style="height: 176px;">
+      <div class="img-ph-label">Métricas de campaña</div>
+      <div class="img-ph-url">[INSERTAR URL: metricas-enna-lux]</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SLIDE 08 — PILAR 03
+     Dark · Editorial izquierda · numeral bg
+════════════════════════════════════════ -->
+<section class="dark-bg" data-screen-label="08 Pilar 03">
+  <div class="gold-bar-top"></div>
+  <div class="ghost-num" style="font-size: 680px; right: -30px; bottom: -70px;">03</div>
+
+  <div style="
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: var(--pad-y) var(--pad-x);
+    gap: var(--gap-lg); max-width: 960px;
+  ">
+    <div class="badge badge-gold">Pilar 03</div>
+    <div class="title-display" style="font-size: var(--type-title);">Captación<br>proactiva</div>
+    <div class="gold-rule"></div>
+    <div class="italic-sub" style="font-size: var(--type-sub); color: rgba(245,240,232,0.65);">
+      No esperamos a que lleguen.<br>Salimos a buscar al cliente correcto.
+    </div>
+    <div class="body-text" style="font-size: var(--type-body); color: rgba(245,240,232,0.38); max-width: 740px;">
+      Meta Ads funciona para servicios visuales y aspiracionales.<br>
+      El formulario filtra. El equipo llama con contexto, no a ciegas.
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SLIDE 09 — CÓMO LLEGA EL LEAD
+     Cream · Flujo horizontal 3 pasos
+════════════════════════════════════════ -->
+<section class="cream-bg" data-screen-label="09 Cómo llega el lead">
+  <div style="
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    padding: var(--pad-y) var(--pad-x);
+    gap: var(--gap-xl);
+  ">
+    <!-- Header -->
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <div class="eyebrow">El sistema detrás</div>
+      <div class="title-heading" style="font-size: var(--type-heading); color: var(--dark);">Del anuncio a la llamada</div>
+    </div>
+
+    <!-- 3 step flow -->
+    <div style="display: flex; align-items: stretch; gap: 0; flex: 1;">
+
+      <!-- Step 1 — dark -->
+      <div style="flex:1;display:flex;flex-direction:column;gap:var(--gap-md);padding:44px 40px;background:var(--dark);border-radius:4px 0 0 4px;">
+        <div style="font-family:'Sequel Sans Display',sans-serif;font-size:64px;font-weight:800;color:var(--gold);line-height:1;">1</div>
+        <div class="title-heading" style="font-size:var(--type-sub);color:var(--cream);line-height:1.2;">Formulario<br>de cualificación</div>
+        <div class="img-ph" style="flex:1;border-color:rgba(184,145,58,0.25);">
+          <div class="img-ph-label" style="color:rgba(184,145,58,0.6);font-size:var(--type-micro);">[INSERTAR URL: formulario-meta]</div>
+        </div>
+      </div>
+
+      <!-- Arrow -->
+      <div style="display:flex;align-items:center;justify-content:center;width:60px;background:rgba(28,24,20,0.05);flex-shrink:0;">
+        <span style="font-size:28px;color:rgba(184,145,58,0.45);">→</span>
+      </div>
+
+      <!-- Step 2 — cream -->
+      <div style="flex:1;display:flex;flex-direction:column;gap:var(--gap-md);padding:44px 40px;background:var(--cream2);border:1px solid rgba(28,24,20,0.08);">
+        <div style="font-family:'Sequel Sans Display',sans-serif;font-size:64px;font-weight:800;color:var(--gold);line-height:1;">2</div>
+        <div class="title-heading" style="font-size:var(--type-sub);color:var(--dark);line-height:1.2;">Notificación<br>inmediata</div>
+        <div class="img-ph" style="flex:1;">
+          <div class="img-ph-label" style="font-size:var(--type-micro);">[INSERTAR URL: notificacion-lead]</div>
+        </div>
+      </div>
+
+      <!-- Arrow -->
+      <div style="display:flex;align-items:center;justify-content:center;width:60px;background:rgba(28,24,20,0.05);flex-shrink:0;">
+        <span style="font-size:28px;color:rgba(184,145,58,0.45);">→</span>
+      </div>
+
+      <!-- Step 3 — cream -->
+      <div style="flex:1;display:flex;flex-direction:column;gap:var(--gap-md);padding:44px 40px;background:var(--cream2);border:1px solid rgba(28,24,20,0.08);border-radius:0 4px 4px 0;">
+        <div style="font-family:'Sequel Sans Display',sans-serif;font-size:64px;font-weight:800;color:var(--gold);line-height:1;">3</div>
+        <div class="title-heading" style="font-size:var(--type-sub);color:var(--dark);line-height:1.2;">Lead organizado<br>y listo para llamar</div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;">
+          <div class="italic-sub" style="font-size:var(--type-body);color:var(--copper);text-align:center;line-height:1.6;">El equipo llama<br>con contexto</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SLIDE 10 — PILAR 04
+     Dark · Quote masivo centrado
+════════════════════════════════════════ -->
+<section class="dark-bg" data-screen-label="10 Pilar 04">
+  <div class="gold-bar-top"></div>
+  <div class="ghost-num" style="font-size: 680px; right: -30px; bottom: -70px;">04</div>
+
+  <div style="
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: var(--pad-y) var(--pad-x);
+    gap: var(--gap-lg); max-width: 1040px;
+  ">
+    <div class="badge badge-gold">Pilar 04</div>
+    <div class="title-display" style="font-size: var(--type-title);">Medición<br>y optimización</div>
+    <div class="gold-rule"></div>
+    <div class="title-heading" style="font-size: var(--type-heading); color: var(--gold);">Dato mata relato.</div>
+    <div class="body-text" style="font-size: var(--type-body); color: rgba(245,240,232,0.4); max-width: 780px;">
+      No medimos solo cuántos leads entran. Medimos el embudo completo —<br>
+      el mismo que calculamos juntas.
+    </div>
+    <div class="body-text" style="font-size: var(--type-small); color: rgba(245,240,232,0.25); max-width: 700px;">
+      El cuello de botella casi nunca está en el anuncio. Pero si solo miras el anuncio, nunca lo sabes.
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SLIDE 11 — RESULTADOS REALES
+     Dark · Image grande + 3 números abajo
+════════════════════════════════════════ -->
+<section class="dark-bg" data-screen-label="11 Resultados reales">
+  <div class="gold-bar-top"></div>
+
+  <div style="
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    padding: 60px var(--pad-x);
+    gap: 24px;
+  ">
+    <!-- Label -->
+    <div class="eyebrow eyebrow-gold">Resultados reales</div>
+
+    <!-- Main image -->
+    <div class="img-ph" style="flex: 1;">
+      <div class="img-ph-label">Captura / visual de campaña</div>
+      <div class="img-ph-url">[INSERTAR URL: resultados-campana]</div>
+    </div>
+
+    <!-- 3 numbers bar -->
+    <div style="display: grid; grid-template-columns: repeat(3,1fr); gap: 3px;">
+      <div style="display:flex;flex-direction:column;gap:8px;padding:28px 36px;background:rgba(184,145,58,0.09);border-radius:2px 0 0 2px;">
+        <div style="font-family:'Sequel Sans Display',sans-serif;font-size:var(--type-heading);font-weight:800;color:var(--gold);line-height:1;">[Nº leads]</div>
+        <div style="font-family:'Poppins',sans-serif;font-size:var(--type-label);font-weight:300;color:rgba(245,240,232,0.35);letter-spacing:0.1em;text-transform:uppercase;">Leads captados</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;padding:28px 36px;background:rgba(184,145,58,0.09);">
+        <div style="font-family:'Sequel Sans Display',sans-serif;font-size:var(--type-heading);font-weight:800;color:var(--gold);line-height:1;">[Coste / cita]</div>
+        <div style="font-family:'Poppins',sans-serif;font-size:var(--type-label);font-weight:300;color:rgba(245,240,232,0.35);letter-spacing:0.1em;text-transform:uppercase;">Coste por cita</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;padding:28px 36px;background:rgba(184,145,58,0.09);border-radius:0 2px 2px 0;">
+        <div style="font-family:'Sequel Sans Display',sans-serif;font-size:var(--type-heading);font-weight:800;color:var(--gold);line-height:1;">[Periodo]</div>
+        <div style="font-family:'Poppins',sans-serif;font-size:var(--type-label);font-weight:300;color:rgba(245,240,232,0.35);letter-spacing:0.1em;text-transform:uppercase;">Periodo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SLIDE 12 — SISTEMA DE SEGUIMIENTO
+     Cream · Image + estados pipeline
+════════════════════════════════════════ -->
+<section class="cream-bg" data-screen-label="12 Sistema de seguimiento">
+  <div style="
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    padding: var(--pad-y) var(--pad-x);
+    gap: var(--gap-xl);
+  ">
+    <!-- Header -->
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <div class="eyebrow">Ningún lead se pierde</div>
+      <div class="title-heading" style="font-size: var(--type-heading); color: var(--dark);">Sistema de seguimiento</div>
+    </div>
+
+    <!-- CRM placeholder -->
+    <div class="img-ph" style="flex: 1;">
+      <div class="img-ph-label">Pipeline / CRM</div>
+      <div class="img-ph-url">[INSERTAR URL: crm-pipeline]</div>
+    </div>
+
+    <!-- Pipeline estados -->
+    <div style="display: flex; gap: 14px; align-items: center;">
+      <div style="padding:14px 30px;border:1px solid rgba(28,24,20,0.14);border-radius:2px;font-family:'Poppins',sans-serif;font-size:var(--type-small);font-weight:400;color:var(--copper);letter-spacing:0.06em;">Contactado</div>
+      <div style="width:24px;height:1px;background:rgba(28,24,20,0.15);"></div>
+      <div style="padding:14px 30px;background:var(--dark);border-radius:2px;font-family:'Poppins',sans-serif;font-size:var(--type-small);font-weight:400;color:var(--cream);letter-spacing:0.06em;">Agendado</div>
+      <div style="width:24px;height:1px;background:rgba(28,24,20,0.15);"></div>
+      <div style="padding:14px 30px;border:1px solid rgba(28,24,20,0.14);border-radius:2px;font-family:'Poppins',sans-serif;font-size:var(--type-small);font-weight:400;color:var(--copper);letter-spacing:0.06em;">No-show</div>
+      <div style="width:24px;height:1px;background:rgba(28,24,20,0.15);"></div>
+      <div style="padding:14px 30px;background:var(--gold-grad);border-radius:2px;font-family:'Poppins',sans-serif;font-size:var(--type-small);font-weight:500;color:var(--dark);letter-spacing:0.06em;">Cerrado</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SLIDE 13 — RESUMEN 4 PILARES
+     Dark · Grid oscuro con top borders
+════════════════════════════════════════ -->
+<section class="dark-bg" data-screen-label="13 Resumen 4 pilares">
+  <div class="gold-bar-top"></div>
+
+  <div style="
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    padding: var(--pad-y) var(--pad-x);
+    gap: var(--gap-xl);
+  ">
+    <div class="title-display" style="font-size: var(--type-heading);">Los cuatro pilares</div>
+
+    <!-- Grid dark -->
+    <div style="display: grid; grid-template-columns: repeat(4,1fr); gap: 3px; flex: 1;">
+
+      <div style="display:flex;flex-direction:column;gap:24px;padding:44px 36px;background:rgba(184,145,58,0.1);border-top:3px solid var(--gold);">
+        <div style="font-family:'Sequel Sans Display',sans-serif;font-size:68px;font-weight:800;color:var(--gold);line-height:1;letter-spacing:-0.03em;">01</div>
+        <div class="title-heading" style="font-size:var(--type-sub);color:var(--cream);line-height:1.2;">Radiografía<br>y estrategia</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:24px;padding:44px 36px;background:rgba(245,240,232,0.04);border-top:3px solid rgba(184,145,58,0.3);">
+        <div style="font-family:'Sequel Sans Display',sans-serif;font-size:68px;font-weight:800;color:var(--gold);line-height:1;letter-spacing:-0.03em;">02</div>
+        <div class="title-heading" style="font-size:var(--type-sub);color:var(--cream);line-height:1.2;">Creatividad<br>anticuriosas</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:24px;padding:44px 36px;background:rgba(245,240,232,0.04);border-top:3px solid rgba(184,145,58,0.3);">
+        <div style="font-family:'Sequel Sans Display',sans-serif;font-size:68px;font-weight:800;color:var(--gold);line-height:1;letter-spacing:-0.03em;">03</div>
+        <div class="title-heading" style="font-size:var(--type-sub);color:var(--cream);line-height:1.2;">Captación<br>proactiva</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:24px;padding:44px 36px;background:rgba(245,240,232,0.04);border-top:3px solid rgba(184,145,58,0.3);">
+        <div style="font-family:'Sequel Sans Display',sans-serif;font-size:68px;font-weight:800;color:var(--gold);line-height:1;letter-spacing:-0.03em;">04</div>
+        <div class="title-heading" style="font-size:var(--type-sub);color:var(--cream);line-height:1.2;">Medición y<br>optimización</div>
+      </div>
+
+    </div>
+
+    <!-- Closing line -->
+    <div class="italic-sub" style="font-size: var(--type-body); color: rgba(245,240,232,0.38); max-width: 960px;">
+      Los cuatro juntos son los que hacen que los números que calculamos sean alcanzables — no una promesa en el aire.
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SLIDE 14 — TIMELINE
+     Cream · Línea de tiempo horizontal
+════════════════════════════════════════ -->
+<section class="cream-bg" data-screen-label="14 Timeline">
+  <div style="
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    padding: var(--pad-y) var(--pad-x);
+    gap: var(--gap-xl);
+  ">
+    <!-- Header -->
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <div class="eyebrow">El proceso</div>
+      <div class="title-heading" style="font-size: var(--type-heading); color: var(--dark);">Cómo se hace en la práctica</div>
+    </div>
+
+    <!-- Timeline -->
+    <div style="flex: 1; position: relative; display: flex; flex-direction: column;">
+      <!-- Connecting line -->
+      <div style="position:absolute;top:10px;left:10px;right:10px;height:2px;background:rgba(184,145,58,0.2);"></div>
+
+      <div style="display: flex; gap: 24px; flex: 1; padding-top: 4px;">
+
+        <!-- Fase 1 -->
+        <div style="flex:1;display:flex;flex-direction:column;gap:var(--gap-md);">
+          <div style="width:18px;height:18px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="font-family:'Poppins',sans-serif;font-size:var(--type-label);font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--copper);">Días 1–8</div>
+            <div class="title-heading" style="font-size:var(--type-sub);color:var(--dark);line-height:1.2;">Fase 1<br>Radiografía</div>
+          </div>
+          <div style="flex:1;padding:28px 30px;background:var(--dark);border-radius:4px;display:flex;align-items:center;">
+            <div style="font-family:'Poppins',sans-serif;font-size:var(--type-small);font-weight:300;color:rgba(245,240,232,0.55);line-height:1.65;">Diagnóstico,<br>avatar, oferta,<br>estrategia</div>
+          </div>
+        </div>
+
+        <!-- Fase 2 -->
+        <div style="flex:1;display:flex;flex-direction:column;gap:var(--gap-md);">
+          <div style="width:18px;height:18px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="font-family:'Poppins',sans-serif;font-size:var(--type-label);font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--copper);">Días 8–12</div>
+            <div class="title-heading" style="font-size:var(--type-sub);color:var(--dark);line-height:1.2;">Fase 2<br>Creatividad</div>
+          </div>
+          <div style="flex:1;padding:28px 30px;background:var(--cream2);border:1px solid rgba(28,24,20,0.09);border-radius:4px;display:flex;align-items:center;">
+            <div style="font-family:'Poppins',sans-serif;font-size:var(--type-small);font-weight:300;color:rgba(28,24,20,0.55);line-height:1.65;">Guiones,<br>copies,<br>vídeo editado</div>
+          </div>
+        </div>
+
+        <!-- Fase 3 -->
+        <div style="flex:1;display:flex;flex-direction:column;gap:var(--gap-md);">
+          <div style="width:18px;height:18px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="font-family:'Poppins',sans-serif;font-size:var(--type-label);font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--copper);">Días 12–14</div>
+            <div class="title-heading" style="font-size:var(--type-sub);color:var(--dark);line-height:1.2;">Fase 3<br>Lanzamiento</div>
+          </div>
+          <div style="flex:1;padding:28px 30px;background:var(--cream2);border:1px solid rgba(28,24,20,0.09);border-radius:4px;display:flex;align-items:center;">
+            <div style="font-family:'Poppins',sans-serif;font-size:var(--type-small);font-weight:300;color:rgba(28,24,20,0.55);line-height:1.65;">Cuenta, formulario,<br>notificaciones,<br>hoja de seguimiento</div>
+          </div>
+        </div>
+
+        <!-- Fase 4 -->
+        <div style="flex:1;display:flex;flex-direction:column;gap:var(--gap-md);">
+          <div style="width:18px;height:18px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="font-family:'Poppins',sans-serif;font-size:var(--type-label);font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--copper);">Mes a mes</div>
+            <div class="title-heading" style="font-size:var(--type-sub);color:var(--dark);line-height:1.2;">Fase 4<br>Optimización</div>
+          </div>
+          <div style="flex:1;padding:28px 30px;background:var(--gold-grad);border-radius:4px;display:flex;align-items:center;">
+            <div style="font-family:'Poppins',sans-serif;font-size:var(--type-small);font-weight:300;color:rgba(28,24,20,0.8);line-height:1.65;">Datos, ajustes<br>y reporte<br>quincenal</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SLIDE 15 — FASE 1: RADIOGRAFÍA
+     Dark · Editorial + numeral ghost "1"
+════════════════════════════════════════ -->
+<section class="dark-bg" data-screen-label="15 Fase 1">
+  <div class="gold-bar-top"></div>
+  <div class="ghost-num" style="font-size: 700px; right: -30px; bottom: -80px;">1</div>
+
+  <div style="
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: var(--pad-y) var(--pad-x);
+    gap: var(--gap-lg); max-width: 920px;
+  ">
+    <div style="display: flex; gap: 16px; align-items: center;">
+      <div class="badge badge-gold">Fase 1</div>
+      <div style="font-family:'Poppins',sans-serif;font-size:var(--type-label);font-weight:300;color:rgba(245,240,232,0.3);letter-spacing:0.1em;">Días 1–8</div>
+    </div>
+    <div class="title-display" style="font-size: var(--type-title);">Radiografía<br>y estrategia</div>
+    <div class="gold-rule"></div>
+    <div style="display: flex; flex-direction: column; gap: var(--gap-md);">
+      <div style="display:flex;align-items:center;gap:22px;">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+        <div class="body-text" style="font-size:var(--type-body);color:var(--cream);">Avatar documentado</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:22px;">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+        <div class="body-text" style="font-size:var(--type-body);color:var(--cream);">Oferta validada</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:22px;">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+        <div class="body-text" style="font-size:var(--type-body);color:var(--cream);">Estrategia con escenarios</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:22px;">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+        <div class="body-text" style="font-size:var(--type-body);color:var(--cream);">Script comercial si es necesario</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SLIDE 16 — FASE 2: CREATIVIDAD
+     Cream · Editorial + numeral ghost "2"
+════════════════════════════════════════ -->
+<section class="cream-bg" data-screen-label="16 Fase 2">
+  <div style="position:absolute;right:-30px;bottom:-80px;font-family:'Sequel Sans Display',sans-serif;font-size:700px;font-weight:800;color:rgba(28,24,20,0.04);line-height:1;pointer-events:none;user-select:none;letter-spacing:-0.04em;">2</div>
+
+  <div style="
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: var(--pad-y) var(--pad-x);
+    gap: var(--gap-lg); max-width: 920px;
+  ">
+    <div style="display: flex; gap: 16px; align-items: center;">
+      <div class="badge badge-dark">Fase 2</div>
+      <div style="font-family:'Poppins',sans-serif;font-size:var(--type-label);font-weight:300;color:rgba(28,24,20,0.3);letter-spacing:0.1em;">Días 8–12</div>
+    </div>
+    <div class="title-heading" style="font-size: var(--type-title); color: var(--dark);">Creatividad<br>anticuriosas</div>
+    <div class="gold-rule"></div>
+    <div style="display: flex; flex-direction: column; gap: var(--gap-md);">
+      <div style="display:flex;align-items:center;gap:22px;">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+        <div class="body-text" style="font-size:var(--type-body);color:var(--dark);">Guiones por ángulo</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:22px;">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+        <div class="body-text" style="font-size:var(--type-body);color:var(--dark);">Copies para anuncios</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:22px;">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+        <div class="body-text" style="font-size:var(--type-body);color:var(--dark);">Imágenes rompe-scroll</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:22px;">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+        <div class="body-text" style="font-size:var(--type-body);color:var(--dark);">Vídeo editado y listo para lanzar</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SLIDE 17 — FASE 3: LANZAMIENTO
+     Dark · Editorial + numeral ghost "3"
+════════════════════════════════════════ -->
+<section class="dark-bg" data-screen-label="17 Fase 3">
+  <div class="gold-bar-top"></div>
+  <div class="ghost-num" style="font-size: 700px; right: -30px; bottom: -80px;">3</div>
+
+  <div style="
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: var(--pad-y) var(--pad-x);
+    gap: var(--gap-lg); max-width: 920px;
+  ">
+    <div style="display: flex; gap: 16px; align-items: center;">
+      <div class="badge badge-gold">Fase 3</div>
+      <div style="font-family:'Poppins',sans-serif;font-size:var(--type-label);font-weight:300;color:rgba(245,240,232,0.3);letter-spacing:0.1em;">Días 12–14</div>
+    </div>
+    <div class="title-display" style="font-size: var(--type-title);">Lanzamiento</div>
+    <div class="gold-rule"></div>
+    <div style="display: flex; flex-direction: column; gap: var(--gap-md);">
+      <div style="display:flex;align-items:center;gap:22px;">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+        <div class="body-text" style="font-size:var(--type-body);color:var(--cream);">Cuenta publicitaria configurada</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:22px;">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+        <div class="body-text" style="font-size:var(--type-body);color:var(--cream);">Formulario de cualificación activo</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:22px;">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+        <div class="body-text" style="font-size:var(--type-body);color:var(--cream);">Notificaciones funcionando</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:22px;">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+        <div class="body-text" style="font-size:var(--type-body);color:var(--cream);">Hoja de seguimiento operativa</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SLIDE 18 — FASE 4: OPTIMIZACIÓN
+     Cream · Editorial + numeral ghost "4"
+════════════════════════════════════════ -->
+<section class="cream-bg" data-screen-label="18 Fase 4">
+  <div style="position:absolute;right:-30px;bottom:-80px;font-family:'Sequel Sans Display',sans-serif;font-size:700px;font-weight:800;color:rgba(28,24,20,0.04);line-height:1;pointer-events:none;user-select:none;letter-spacing:-0.04em;">4</div>
+
+  <div style="
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: var(--pad-y) var(--pad-x);
+    gap: var(--gap-lg); max-width: 920px;
+  ">
+    <div style="display: flex; gap: 16px; align-items: center;">
+      <div class="badge badge-dark">Fase 4</div>
+      <div style="font-family:'Poppins',sans-serif;font-size:var(--type-label);font-weight:300;color:rgba(28,24,20,0.3);letter-spacing:0.1em;">Mes a mes</div>
+    </div>
+    <div class="title-heading" style="font-size: var(--type-title); color: var(--dark);">Optimización<br>y reporte</div>
+    <div class="gold-rule"></div>
+    <div style="display: flex; flex-direction: column; gap: var(--gap-md);">
+      <div style="display:flex;align-items:center;gap:22px;">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+        <div class="body-text" style="font-size:var(--type-body);color:var(--dark);">Loom quincenal — qué pasó, por qué, qué ajustamos</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:22px;">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+        <div class="body-text" style="font-size:var(--type-body);color:var(--dark);">Reunión mensual con datos reales</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:22px;">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+        <div class="body-text" style="font-size:var(--type-body);color:var(--dark);">Nuevos creativos cada mes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SLIDE 19 — LO QUE NECESITO
+     Cream · 3 items numerados grandes
+════════════════════════════════════════ -->
+<section class="cream-bg" data-screen-label="19 Lo que necesito">
+  <div style="
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: var(--pad-y) var(--pad-x);
+    gap: var(--gap-xl);
+  ">
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <div class="eyebrow">De tu lado</div>
+      <div class="title-heading" style="font-size: var(--type-heading); color: var(--dark);">Lo que necesito de ti</div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 44px; max-width: 960px;">
+
+      <div style="display:flex;align-items:flex-start;gap:44px;padding-bottom:44px;border-bottom:1px solid rgba(28,24,20,0.09);">
+        <div style="font-family:'Sequel Sans Display',sans-serif;font-size:88px;font-weight:800;color:var(--gold);line-height:1;min-width:80px;">1</div>
+        <div class="title-heading" style="font-size:var(--type-sub);color:var(--dark);line-height:1.3;padding-top:10px;">Acceso a la cuenta publicitaria de Meta</div>
+      </div>
+
+      <div style="display:flex;align-items:flex-start;gap:44px;padding-bottom:44px;border-bottom:1px solid rgba(28,24,20,0.09);">
+        <div style="font-family:'Sequel Sans Display',sans-serif;font-size:88px;font-weight:800;color:var(--gold);line-height:1;min-width:80px;">2</div>
+        <div class="title-heading" style="font-size:var(--type-sub);color:var(--dark);line-height:1.3;padding-top:10px;">Disponibilidad para las dos primeras sesiones</div>
+      </div>
+
+      <div style="display:flex;align-items:flex-start;gap:44px;">
+        <div style="font-family:'Sequel Sans Display',sans-serif;font-size:88px;font-weight:800;color:var(--gold);line-height:1;min-width:80px;">3</div>
+        <div class="title-heading" style="font-size:var(--type-sub);color:var(--dark);line-height:1.3;padding-top:10px;">Alguien en el equipo que responda los leads con rapidez</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SLIDE 20 — CIERRE
+     Dark · Tipografía masiva centrada
+════════════════════════════════════════ -->
+<section class="dark-bg" data-screen-label="20 Cierre">
+  <div class="gold-bar-top"></div>
+
+  <div style="
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 52px;
+    padding: var(--pad-y) var(--pad-x);
+    text-align: center;
+  ">
+    <div style="width: 2px; height: 80px; background: rgba(184,145,58,0.4);"></div>
+
+    <div class="title-display" style="font-size: var(--type-display); line-height: 1.05;">
+      Sin contrato<br>de permanencia.
+    </div>
+
+    <div class="gold-rule" style="width: 64px;"></div>
+
+    <div class="italic-sub" style="font-size: var(--type-sub); color: rgba(245,240,232,0.5); max-width: 860px;">
+      Si a las seis semanas no ves tracción real, puedes salir.<br>
+      Te quedas con todo lo construido.
+    </div>
+
+    <div style="width: 2px; height: 80px; background: rgba(184,145,58,0.4);"></div>
+  </div>
+</section>
+
+
+</deck-stage>
+</body>
+</html>
